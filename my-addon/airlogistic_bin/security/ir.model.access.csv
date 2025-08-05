@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_airlogistic_flight_user,airlogistic.flight.user,model_airlogistic_flight,base.group_user,1,1,1,0
+access_airlogistic_flight_manager,airlogistic.flight.manager,model_airlogistic_flight,base.group_system,1,1,1,1
+access_airlogistic_bin_user,airlogistic.bin.user,model_airlogistic_bin,base.group_user,1,1,1,0
+access_airlogistic_bin_manager,airlogistic.bin.manager,model_airlogistic_bin,base.group_system,1,1,1,1

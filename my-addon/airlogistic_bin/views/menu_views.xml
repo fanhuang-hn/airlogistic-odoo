@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- Main Menu -->
+        <menuitem id="menu_airlogistic_main" 
+                  name="Air Logistics" 
+                  sequence="20"
+                  web_icon="airlogistic_bin,static/description/icon.png"/>
+        
+        <!-- Flight Management Submenu -->
+        <menuitem id="menu_airlogistic_flights" 
+                  name="Flight Management" 
+                  parent="menu_airlogistic_main" 
+                  sequence="10"/>
+        
+        <!-- Bin Management Submenu -->
+        <menuitem id="menu_airlogistic_bins" 
+                  name="Bin Management" 
+                  parent="menu_airlogistic_main" 
+                  sequence="20"/>
+        
+        <!-- Flight Actions and Menus -->
+        <record id="action_airlogistic_flight" model="ir.actions.act_window">
+            <field name="name">Flights</field>
+            <field name="res_model">airlogistic.flight</field>
+            <field name="view_mode">list,form,kanban</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first flight!
+                </p>
+                <p>
+                    Manage flight schedules, capacity, and bin assignments.
+                    Track departure and arrival times, and monitor cargo capacity utilization.
+                </p>
+            </field>
+        </record>
+        
+        <menuitem id="menu_airlogistic_flight_all" 
+                  name="All Flights" 
+                  parent="menu_airlogistic_flights" 
+                  action="action_airlogistic_flight" 
+                  sequence="10"/>
+        
+        <!-- Scheduled Flights -->
+        <record id="action_airlogistic_flight_scheduled" model="ir.actions.act_window">
+            <field name="name">Scheduled Flights</field>
+            <field name="res_model">airlogistic.flight</field>
+            <field name="view_mode">list,form,kanban</field>
+            <field name="domain">[('state', 'in', ['scheduled', 'boarding'])]</field>
+            <field name="context">{}</field>
+        </record>
+        
+        <menuitem id="menu_airlogistic_flight_scheduled" 
+                  name="Scheduled Flights" 
+                  parent="menu_airlogistic_flights" 
+                  action="action_airlogistic_flight_scheduled" 
+                  sequence="20"/>
+        
+        <!-- Bin Actions and Menus -->
+        <record id="action_airlogistic_bin" model="ir.actions.act_window">
+            <field name="name">Bin Containers</field>
+            <field name="res_model">airlogistic.bin</field>
+            <field name="view_mode">list,form,kanban</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first bin container!
+                </p>
+                <p>
+                    Manage cargo bin containers including ULDs, pallets, and standard containers.
+                    Track weight, volume, and flight assignments to optimize cargo loading.
+                </p>
+            </field>
+        </record>
+        
+        <menuitem id="menu_airlogistic_bin_all" 
+                  name="All Bins" 
+                  parent="menu_airlogistic_bins" 
+                  action="action_airlogistic_bin" 
+                  sequence="10"/>
+        
+        <!-- Available Bins -->
+        <record id="action_airlogistic_bin_available" model="ir.actions.act_window">
+            <field name="name">Available Bins</field>
+            <field name="res_model">airlogistic.bin</field>
+            <field name="view_mode">list,form,kanban</field>
+            <field name="domain">[('state', '=', 'available')]</field>
+            <field name="context">{}</field>
+        </record>
+        
+        <menuitem id="menu_airlogistic_bin_available" 
+                  name="Available Bins" 
+                  parent="menu_airlogistic_bins" 
+                  action="action_airlogistic_bin_available" 
+                  sequence="20"/>
+        
+        <!-- Overloaded Bins -->
+        <record id="action_airlogistic_bin_overloaded" model="ir.actions.act_window">
+            <field name="name">Overloaded Bins</field>
+            <field name="res_model">airlogistic.bin</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[('is_overloaded', '=', True)]</field>
+            <field name="context">{}</field>
+        </record>
+        
+        <menuitem id="menu_airlogistic_bin_overloaded" 
+                  name="Overloaded Bins" 
+                  parent="menu_airlogistic_bins" 
+                  action="action_airlogistic_bin_overloaded" 
+                  sequence="30"/>
+        
+    </data>
+</odoo>
