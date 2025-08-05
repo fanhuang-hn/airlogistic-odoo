@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        
+        <!-- Demo Flight Data -->
+        <record id="demo_flight_ca123" model="airlogistic.flight">
+            <field name="flight_number">CA123</field>
+            <field name="airline">Air China</field>
+            <field name="aircraft_type">Boeing 777-300ER</field>
+            <field name="departure_airport">PEK</field>
+            <field name="arrival_airport">SGN</field>
+            <field name="departure_date">2025-08-06 16:00:00</field>
+            <field name="arrival_date">2025-08-07 02:00:00</field>
+            <field name="state">scheduled</field>
+            <field name="max_cargo_weight">20000</field>
+            <field name="max_cargo_volume">65</field>
+        </record>
+        
+        <record id="demo_flight_sq456" model="airlogistic.flight">
+            <field name="flight_number">SQ456</field>
+            <field name="airline">Singapore Airlines</field>
+            <field name="aircraft_type">Airbus A380-800</field>
+            <field name="departure_airport">SIN</field>
+            <field name="arrival_airport">SGN</field>
+            <field name="departure_date">2025-08-06 20:00:00</field>
+            <field name="arrival_date">2025-08-07 08:00:00</field>
+            <field name="state">boarding</field>
+            <field name="max_cargo_weight">25000</field>
+            <field name="max_cargo_volume">80</field>
+        </record>
+        
+        <!-- Demo Bin Data with Different Scenarios -->
+        
+        <!-- Available bins -->
+        <record id="demo_bin_uld_ld3_002" model="airlogistic.bin">
+            <field name="bin_code">ULD-LD3-002</field>
+            <field name="bin_type">uld</field>
+            <field name="bin_subtype">LD3</field>
+            <field name="volume">4.2</field>
+            <field name="max_weight">1588</field>
+            <field name="current_weight">0</field>
+            <field name="length">156</field>
+            <field name="width">153</field>
+            <field name="height">163</field>
+            <field name="current_location">Terminal 1 - Loading Bay A</field>
+            <field name="description">Available LD3 container ready for loading</field>
+        </record>
+        
+        <record id="demo_bin_pallet_002" model="airlogistic.bin">
+            <field name="bin_code">PLT-96x125-002</field>
+            <field name="bin_type">pallet</field>
+            <field name="bin_subtype">96x125</field>
+            <field name="volume">15.0</field>
+            <field name="max_weight">7500</field>
+            <field name="current_weight">0</field>
+            <field name="length">320</field>
+            <field name="width">244</field>
+            <field name="height">163</field>
+            <field name="current_location">Cargo Warehouse - Zone B</field>
+            <field name="description">Large pallet for heavy cargo</field>
+        </record>
+        
+        <!-- Assigned bins to flights -->
+        <record id="demo_bin_assigned_001" model="airlogistic.bin">
+            <field name="bin_code">ULD-LD7-002</field>
+            <field name="bin_type">uld</field>
+            <field name="bin_subtype">LD7</field>
+            <field name="volume">9.9</field>
+            <field name="max_weight">4626</field>
+            <field name="current_weight">2000</field>
+            <field name="length">308</field>
+            <field name="width">223</field>
+            <field name="height">163</field>
+            <field name="flight_id" ref="demo_flight_ca123"/>
+            <field name="current_location">Terminal 2 - Gate 15</field>
+            <field name="description">LD7 assigned to CA123 with moderate load</field>
+        </record>
+        
+        <record id="demo_bin_assigned_002" model="airlogistic.bin">
+            <field name="bin_code">CNT-STD-002</field>
+            <field name="bin_type">container</field>
+            <field name="bin_subtype">Standard</field>
+            <field name="volume">8.0</field>
+            <field name="max_weight">3000</field>
+            <field name="current_weight">2800</field>
+            <field name="length">200</field>
+            <field name="width">200</field>
+            <field name="height">200</field>
+            <field name="flight_id" ref="demo_flight_ca123"/>
+            <field name="current_location">Terminal 2 - Gate 15</field>
+            <field name="description">Standard container near capacity - assigned to CA123</field>
+        </record>
+        
+        <!-- Overloaded bin (demonstration) -->
+        <record id="demo_bin_overloaded" model="airlogistic.bin">
+            <field name="bin_code">PLT-OVER-001</field>
+            <field name="bin_type">pallet</field>
+            <field name="bin_subtype">Special</field>
+            <field name="volume">10.0</field>
+            <field name="max_weight">5000</field>
+            <field name="current_weight">5200</field>
+            <field name="length">250</field>
+            <field name="width">200</field>
+            <field name="height">200</field>
+            <field name="flight_id" ref="demo_flight_sq456"/>
+            <field name="current_location">Terminal 1 - Problem Area</field>
+            <field name="description">OVERLOADED PALLET - Needs immediate attention!</field>
+        </record>
+        
+        <!-- Bins in different states -->
+        <record id="demo_bin_maintenance" model="airlogistic.bin">
+            <field name="bin_code">ULD-MAINT-001</field>
+            <field name="bin_type">uld</field>
+            <field name="bin_subtype">LD3</field>
+            <field name="volume">4.2</field>
+            <field name="max_weight">1588</field>
+            <field name="current_weight">0</field>
+            <field name="current_location">Maintenance Facility</field>
+            <field name="last_maintenance_date">2025-07-05</field>
+            <field name="next_maintenance_date">2025-10-05</field>
+            <field name="description">LD3 container under scheduled maintenance</field>
+        </record>
+        
+        <record id="demo_bin_bulk_cargo" model="airlogistic.bin">
+            <field name="bin_code">BULK-001</field>
+            <field name="bin_type">bulk</field>
+            <field name="bin_subtype">General</field>
+            <field name="volume">20.0</field>
+            <field name="max_weight">10000</field>
+            <field name="current_weight">3500</field>
+            <field name="current_location">Bulk Cargo Area</field>
+            <field name="description">Bulk cargo container for general freight</field>
+        </record>
+        
+        <!-- Special cargo bin -->
+        <record id="demo_bin_special" model="airlogistic.bin">
+            <field name="bin_code">SPEC-COOL-001</field>
+            <field name="bin_type">special</field>
+            <field name="bin_subtype">Refrigerated</field>
+            <field name="volume">6.0</field>
+            <field name="max_weight">2500</field>
+            <field name="current_weight">1200</field>
+            <field name="flight_id" ref="demo_flight_sq456"/>
+            <field name="current_location">Cold Storage - Zone C</field>
+            <field name="certification_expiry">2025-11-05</field>
+            <field name="description">Refrigerated container for temperature-sensitive cargo</field>
+        </record>
+        
+        <!-- Additional standard containers for variety -->
+        <record id="demo_bin_container_003" model="airlogistic.bin">
+            <field name="bin_code">CNT-STD-003</field>
+            <field name="bin_type">container</field>
+            <field name="bin_subtype">Standard</field>
+            <field name="volume">8.0</field>
+            <field name="max_weight">3000</field>
+            <field name="current_weight">1500</field>
+            <field name="current_location">Cargo Warehouse - Zone A</field>
+            <field name="description">Standard container at 50% capacity</field>
+        </record>
+        
+        <record id="demo_bin_container_004" model="airlogistic.bin">
+            <field name="bin_code">CNT-STD-004</field>
+            <field name="bin_type">container</field>
+            <field name="bin_subtype">Standard</field>
+            <field name="volume">8.0</field>
+            <field name="max_weight">3000</field>
+            <field name="current_weight">2400</field>
+            <field name="flight_id" ref="demo_flight_sq456"/>
+            <field name="current_location">Terminal 1 - Gate 8</field>
+            <field name="description">Standard container at 80% capacity - assigned to SQ456</field>
+        </record>
+        
+    </data>
+</odoo>

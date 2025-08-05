@@ -1,0 +1,82 @@
+/* Airlogistic Bin Management Styles */
+
+/* Weight utilization progress bar styling */
+.o_kanban_view .oe_kanban_card .progress {
+    margin-top: 8px;
+    height: 8px;
+}
+
+.o_kanban_view .oe_kanban_card .progress-bar {
+    transition: width 0.3s ease;
+}
+
+/* Alert styling for overloaded bins */
+.o_form_view .alert-danger {
+    border-left: 4px solid #dc3545;
+}
+
+.o_form_view .alert-warning {
+    border-left: 4px solid #ffc107;
+}
+
+/* Status label styling */
+.o_list_view .badge-success {
+    background-color: #28a745;
+}
+
+.o_list_view .badge-info {
+    background-color: #17a2b8;
+}
+
+.o_list_view .badge-warning {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.o_list_view .badge-danger {
+    background-color: #dc3545;
+}
+
+/* Kanban card styling for bins */
+.o_kanban_view .oe_kanban_card.overloaded {
+    border-left: 4px solid #dc3545;
+}
+
+.o_kanban_view .oe_kanban_card.near_capacity {
+    border-left: 4px solid #ffc107;
+}
+
+/* Flight kanban card styling */
+.o_kanban_view .o_kanban_image_fill_left i.fa-plane {
+    padding: 20px;
+}
+
+.o_kanban_view .o_kanban_image_fill_left i.fa-cube {
+    padding: 20px;
+}
+
+/* Weight utilization percentage styling */
+.weight-util-high {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.weight-util-medium {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+.weight-util-low {
+    color: #28a745;
+}
+
+/* Button styling */
+.btn-outline-danger.overload-warning {
+    border-color: #dc3545;
+    color: #dc3545;
+}
+
+.btn-outline-danger.overload-warning:hover {
+    background-color: #dc3545;
+    color: white;
+}

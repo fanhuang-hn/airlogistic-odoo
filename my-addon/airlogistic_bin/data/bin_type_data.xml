@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <!-- Default Bin Type Data -->
+        <!-- This data is created with noupdate="1" so it won't be overwritten on module updates -->
+        
+        <!-- Sample ULD Containers -->
+        <record id="bin_type_uld_ld3" model="airlogistic.bin">
+            <field name="bin_code">ULD-LD3-001</field>
+            <field name="bin_type">uld</field>
+            <field name="bin_subtype">LD3</field>
+            <field name="volume">4.2</field>
+            <field name="max_weight">1588</field>
+            <field name="current_weight">0</field>
+            <field name="length">156</field>
+            <field name="width">153</field>
+            <field name="height">163</field>
+            <field name="description">Standard LD3 Unit Load Device for narrow-body aircraft</field>
+        </record>
+        
+        <record id="bin_type_uld_ld7" model="airlogistic.bin">
+            <field name="bin_code">ULD-LD7-001</field>
+            <field name="bin_type">uld</field>
+            <field name="bin_subtype">LD7</field>
+            <field name="volume">9.9</field>
+            <field name="max_weight">4626</field>
+            <field name="current_weight">0</field>
+            <field name="length">308</field>
+            <field name="width">223</field>
+            <field name="height">163</field>
+            <field name="description">LD7 Unit Load Device for wide-body aircraft</field>
+        </record>
+        
+        <!-- Sample Pallet Containers -->
+        <record id="bin_type_pallet_88x108" model="airlogistic.bin">
+            <field name="bin_code">PLT-88x108-001</field>
+            <field name="bin_type">pallet</field>
+            <field name="bin_subtype">88x108</field>
+            <field name="volume">12.5</field>
+            <field name="max_weight">6800</field>
+            <field name="current_weight">0</field>
+            <field name="length">274</field>
+            <field name="width">224</field>
+            <field name="height">163</field>
+            <field name="description">Standard 88x108 inch cargo pallet</field>
+        </record>
+        
+        <!-- Sample Container -->
+        <record id="bin_type_container_std" model="airlogistic.bin">
+            <field name="bin_code">CNT-STD-001</field>
+            <field name="bin_type">container</field>
+            <field name="bin_subtype">Standard</field>
+            <field name="volume">8.0</field>
+            <field name="max_weight">3000</field>
+            <field name="current_weight">0</field>
+            <field name="length">200</field>
+            <field name="width">200</field>
+            <field name="height">200</field>
+            <field name="description">Standard cargo container for general freight</field>
+        </record>
+        
+        <!-- Sample Flight Data -->
+        <record id="flight_vn123" model="airlogistic.flight">
+            <field name="flight_number">VN123</field>
+            <field name="airline">Vietnam Airlines</field>
+            <field name="aircraft_type">Boeing 787-9</field>
+            <field name="departure_airport">SGN</field>
+            <field name="arrival_airport">NRT</field>
+            <field name="departure_date">2025-08-06 10:00:00</field>
+            <field name="arrival_date">2025-08-06 15:00:00</field>
+            <field name="state">scheduled</field>
+            <field name="max_cargo_weight">15000</field>
+            <field name="max_cargo_volume">50</field>
+        </record>
+        
+        <record id="flight_qr456" model="airlogistic.flight">
+            <field name="flight_number">QR456</field>
+            <field name="airline">Qatar Airways</field>
+            <field name="aircraft_type">Airbus A350-900</field>
+            <field name="departure_airport">DOH</field>
+            <field name="arrival_airport">SGN</field>
+            <field name="departure_date">2025-08-07 08:00:00</field>
+            <field name="arrival_date">2025-08-07 14:00:00</field>
+            <field name="state">scheduled</field>
+            <field name="max_cargo_weight">18000</field>
+            <field name="max_cargo_volume">60</field>
+        </record>
+        
+    </data>
+</odoo>

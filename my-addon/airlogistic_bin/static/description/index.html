@@ -1,0 +1,47 @@
+# Airlogistic Bin Management
+
+## Overview
+Complete bin container management system for air logistics operations.
+
+## Features
+- **Bin Container Management**: Create and manage ULD, Pallet, Container, and special cargo bins
+- **Flight Assignment**: Assign bins to flights with automatic validation
+- **Weight Management**: Track current weight vs maximum capacity with overload warnings
+- **Volume Tracking**: Monitor volume utilization and capacity
+- **Flight Integration**: Comprehensive flight management with bin assignments
+- **Status Tracking**: Real-time status updates from available to delivered
+- **Maintenance Mode**: Track maintenance schedules and certifications
+- **Location Tracking**: Monitor bin locations and warehouse assignments
+
+## User Story Implementation
+This module implements User Story 2.1 - Tạo bin chứa hàng with the following features:
+
+### Required Fields
+- ✅ Bin Code (mã bin)
+- ✅ Type (ULD, Pallet, Container, etc.)
+- ✅ Volume (m³)
+- ✅ Max Weight (kg)
+- ✅ Current Weight (kg)
+- ✅ Assigned Flight (many2one → flight)
+
+### Acceptance Criteria
+- ✅ Create bins and assign to flights
+- ✅ Prevent Current Weight > Max Weight
+- ✅ Prevent bin modifications when flight has departed
+
+### Definition of Done
+- ✅ Separate bin management interface (form, list view)
+- ✅ Flight screen with bins tab
+- ✅ Overload warnings and validation
+
+## Installation
+1. Copy module to addons directory
+2. Update apps list
+3. Install "Airlogistic Bin Management"
+
+## Usage
+1. Access via Air Logistics menu
+2. Create flights in Flight Management
+3. Create bins in Bin Management  
+4. Assign bins to flights
+5. Monitor weight and capacity utilization
