@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Main Menu -->
+    <menuitem id="menu_sample_main" 
+              name="Sample Addon" 
+              sequence="100"
+              web_icon="sample_addon,static/description/icon.png"/>
+    
+    <!-- Configuration Menu -->
+    <menuitem id="menu_sample_config" 
+              name="Configuration" 
+              parent="menu_sample_main" 
+              sequence="90"/>
+    
+    <!-- Sample Model Menu -->
+    <menuitem id="menu_sample_model" 
+              name="Sample Records" 
+              parent="menu_sample_main" 
+              action="action_sample_model" 
+              sequence="10"/>
+    
+    <!-- Tags Menu -->
+    <menuitem id="menu_sample_tags" 
+              name="Tags" 
+              parent="menu_sample_config" 
+              action="action_sample_model_tag" 
+              sequence="10"/>
+</odoo>

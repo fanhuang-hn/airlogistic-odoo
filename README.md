@@ -1,160 +1,161 @@
-Tuyệt vời. Dưới đây là **kế hoạch viết PoC chi tiết cho từng Sprint (1 → 4)** để phát triển nhanh một **MVP Logistic Portal trên Odoo**.
+# README - Odoo Addon Development với GitHub Copilot
+
+## 🚀 Tổng quan
+Workspace này được thiết lập để phát triển addon Odoo 18.0 với sự hỗ trợ của GitHub Copilot. Tất cả các addon tùy chỉnh sẽ được phát triển trong thư mục `my-addon/`.
+
+## 📁 Cấu trúc Thư mục
+```
+d:\Training\airlogistic-odoo\
+├── docker-compose.yml          # Cấu hình Docker
+├── odoo.conf                   # Cấu hình Odoo
+├── .copilot-instructions.md    # Hướng dẫn cho GitHub Copilot
+├── addons/                     # Community addons (helpdesk, etc.)
+├── my-addon/                   # 🎯 THƯC MỤC ADDON TÙY CHỈNH
+│   └── sample_addon/           # Addon mẫu
+└── README.md                   # File này
+```
+
+## 🎯 Cách sử dụng GitHub Copilot Instructions
+
+### 1. GitHub Copilot đã được cấu hình để:
+- ✅ Hiểu cấu trúc addon Odoo 18.0
+- ✅ Tuân theo coding conventions của Odoo
+- ✅ Tạo code theo best practices
+- ✅ Hỗ trợ phát triển trong thư mục `my-addon/`
+
+### 2. Tạo addon mới:
+```bash
+# Trong VS Code, sử dụng Copilot Chat:
+"Tạo addon mới tên 'my_custom_addon' trong thư mục my-addon với model quản lý sản phẩm"
+```
+
+### 3. Các prompt hữu ích với Copilot:
+
+#### Tạo Model mới:
+```
+"Tạo model 'product.management' với các field: name, description, price, category_id, state với workflow draft->confirmed->done"
+```
+
+#### Tạo View:
+```
+"Tạo form view cho model product.management với statusbar và notebook layout"
+```
+
+#### Tạo Wizard:
+```
+"Tạo wizard để bulk update price cho multiple products"
+```
+
+#### Tạo Report:
+```
+"Tạo PDF report cho model product.management với template đẹp"
+```
+
+#### Tạo Controller/API:
+```
+"Tạo REST API endpoint để get/post data cho model product.management"
+```
+
+## 🛠️ Quy trình phát triển
+
+### Bước 1: Khởi tạo addon
+1. Tạo thư mục addon trong `my-addon/`
+2. Sử dụng Copilot để tạo cấu trúc cơ bản
+3. Cập nhật `__manifest__.py`
+
+### Bước 2: Phát triển Model
+1. Định nghĩa model trong `models/`
+2. Tạo security rules
+3. Tạo data/demo files
+
+### Bước 3: Tạo Views
+1. Tạo form, tree, kanban views
+2. Tạo menu structure
+3. Cấu hình actions
+
+### Bước 4: Test và Deploy
+```bash
+# Cài đặt addon
+docker-compose exec odoo odoo -i addon_name -d odoo --stop-after-init
+
+# Update addon
+docker-compose exec odoo odoo -u addon_name -d odoo --stop-after-init
+
+# Debug mode
+docker-compose exec odoo odoo -d odoo --dev=all
+```
+
+## 📝 Ví dụ Prompts cho Copilot
+
+### Tạo addon CRM tùy chỉnh:
+```
+"Tạo addon CRM tùy chỉnh trong my-addon với:
+- Model lead.custom với fields: name, email, phone, company, source, state
+- Workflow: new -> qualified -> proposal -> won/lost
+- Form view với statusbar
+- Kanban view group by state
+- Wizard để convert lead to opportunity"
+```
+
+### Tạo addon Inventory:
+```
+"Tạo addon quản lý kho trong my-addon với:
+- Model stock.item với fields: name, sku, quantity, location, category
+- Model stock.movement để track in/out
+- Dashboard view hiển thị stock levels
+- Alert khi stock thấp"
+```
+
+### Tạo addon HR:
+```
+"Tạo addon HR trong my-addon với:
+- Model hr.employee.custom inherit hr.employee
+- Thêm fields: skill_ids, certification_ids, performance_rating
+- View form mở rộng
+- Report performance review"
+```
+
+## 🎨 Copilot Best Practices
+
+### 1. Descriptive Prompts:
+```
+❌ "Tạo model"
+✅ "Tạo model quản lý đơn hàng với workflow và integration với mail system"
+```
+
+### 2. Specify Requirements:
+```
+❌ "Tạo view"
+✅ "Tạo kanban view với drag-drop, color coding theo priority, và button actions"
+```
+
+### 3. Include Context:
+```
+❌ "Fix lỗi"
+✅ "Fix validation error trong model khi state transition từ draft sang confirmed"
+```
+
+## 🚀 Sample Addon
+Tham khảo `my-addon/sample_addon/` để xem ví dụ hoàn chỉnh về:
+- ✅ Model structure với computed fields
+- ✅ Complete views (tree, form, kanban)
+- ✅ Wizard for bulk operations
+- ✅ Security configuration
+- ✅ API controllers
+- ✅ Mail integration
+- ✅ Demo data
+
+## 📚 Tài liệu tham khảo
+- [Odoo 18.0 Documentation](https://www.odoo.com/documentation/18.0/)
+- [Odoo Developer Tutorials](https://www.odoo.com/documentation/18.0/developer/)
+- [GitHub Copilot Documentation](https://docs.github.com/en/copilot)
+
+## 💡 Tips
+1. **Luôn sử dụng** naming conventions của Odoo
+2. **Theo dõi** security và access rights
+3. **Test kỹ** addon trước khi deploy
+4. **Sử dụng** demo data để test
+5. **Tận dụng** Copilot suggestions nhưng review code kỹ
 
 ---
-
-## ⚙️ **Sprint 1 – Tech Foundation**
-
-### 🎯 Mục tiêu:
-
-* Xây dựng nền tảng kỹ thuật cho hệ thống
-* Xác thực, phân quyền, dashboard
-
-### 🔧 Các module PoC:
-
-1. **Authentication**:
-
-   * Sử dụng sẵn `res.users` và `res.groups`.
-   * Tích hợp xác thực OTP hoặc SSO nếu cần.
-
-2. **Role Assignment**:
-
-   * Tạo 3 nhóm quyền:
-
-     * Internal: Sales, Ops, Manager
-     * External: Forwarder/Customer
-   * Module: `base_user_roles` (custom)
-
-3. **Dashboard Setup**:
-
-   * Tạo `Customer KPI Dashboard`, `Ticket Stats`, `Service Overview`
-   * Dùng `web_dashboard` hoặc `custom model + graph view`.
-
----
-
-## 🚀 **Sprint 2A – MVP1: Online Service Delivery**
-
-### 🎯 Mục tiêu:
-
-* Đăng ký người dùng, gửi yêu cầu dịch vụ
-
-### 🔧 Các module PoC:
-
-1. **Online Registration**:
-
-   * Sử dụng `website_form` hoặc build `controller` + `res.partner` model.
-   * Tạo email verify + approval workflow.
-
-2. **Online Service Request**:
-
-   * Module: `logistic.service.request`
-
-     * Trường: AWB No., Pickup, Destination, File Upload
-     * Chọn phương thức nhập liệu:
-
-       * Thủ công
-       * Upload file (PDF, XML, CSV)
-       * Ảnh scan → OCR (Tesseract/Azure/Google Vision)
-
-3. **Customer Profile Management**:
-
-   * Dùng `res.partner` custom tab: loại hình, giấy phép, mã số thuế, ID doanh nghiệp,...
-
----
-
-## 📞 **Sprint 2B – MVP2: Customer Support**
-
-### 🎯 Mục tiêu:
-
-* Xử lý yêu cầu hỗ trợ, tài liệu hướng dẫn
-
-### 🔧 Các module PoC:
-
-1. **FAQ + Knowledge Base**:
-
-   * Module: `knowledge`, `website_knowledge` hoặc `eLearning`.
-
-2. **Raise Ticket (SLA)**:
-
-   * Module: `helpdesk`
-
-     * SLA rules
-     * Email gateway
-     * Tag by service type
-
-3. **Click-to-Call**:
-
-   * Giả lập PoC: Gắn link `tel:` cho số tổng đài, hoặc tích hợp với Twilio/Call Center API.
-
----
-
-## 📦 **Sprint 3 – MVP3: Industry-specific Functions**
-
-### 🎯 Mục tiêu:
-
-* Số thứ tự, tracking, analytics
-
-### 🔧 Các module PoC:
-
-1. **Queue Number & Online Queuing**:
-
-   * Module: `queue.ticket`
-
-     * Sequence + thời gian hẹn
-     * Gửi SMS/Email xác nhận
-
-2. **Track & Trace**:
-
-   * PoC: Nhập mã vận đơn → trả thông tin
-   * Có thể mock dữ liệu hoặc tích hợp API mẫu từ Airline/FW
-
-3. **Dashboards**:
-
-   * `Customer KPI`: #service request, xử lý nhanh/chậm
-   * `Satisfaction KPI`: Mock theo điểm đánh giá ticket
-   * `Operational`: Số lượng xử lý theo agent/time
-
----
-
-## 🧠 **Sprint 4 – MVP4: Advanced Functions**
-
-### 🎯 Mục tiêu:
-
-* OCR, thanh toán, lịch bay, chatbot, hành trình khách hàng
-
-### 🔧 Các module PoC:
-
-1. **Upload + OCR**:
-
-   * Dùng `attachment` + API tích hợp Google Vision / Azure OCR
-   * Lưu thông tin nhận diện vào `service.request`
-
-2. **Online Payment**:
-
-   * Sử dụng mô-đun `website_payment`
-   * Tích hợp PayPal / Stripe / VNPAY (qua middleware)
-
-3. **Flight Schedule Display**:
-
-   * PoC mock data
-   * Tích hợp API nếu có (SkyScanner, FlightAware,...)
-
-4. **Chatbot**:
-
-   * Gắn link iframe chatbot (MS Bot, GPT-powered Rasa, v.v.)
-   * Demo: Form chọn câu hỏi → trả câu trả lời tự động
-
-5. **Customer Journey Analytics**:
-
-   * Tracking luồng từ đăng ký → gửi yêu cầu → nhận kết quả
-   * Dùng `web_session`, `auditlog`, hoặc tích hợp Google Analytics 4
-
----
-
-## 📁 Tổng hợp tài liệu PoC cho mỗi Sprint:
-
-* Tạo sơ đồ module + mô hình dữ liệu từng Sprint.
-* Viết tài liệu cài đặt Odoo + module structure.
-* Generate demo code cho từng module theo chuẩn Odoo 16/17.
-* Tạo kế hoạch test + dữ liệu mock.
-
-Bạn muốn bắt đầu từ Sprint nào trước? Hay tôi tạo sẵn toàn bộ bản thiết kế PoC?
+**Happy Coding với GitHub Copilot! 🚀**
