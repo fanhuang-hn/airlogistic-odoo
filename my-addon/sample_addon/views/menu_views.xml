@@ -2,9 +2,31 @@
 <odoo>
     <!-- Main Menu -->
     <menuitem id="menu_sample_main" 
-              name="Sample Addon" 
+              name="Air Logistics" 
               sequence="100"
               web_icon="sample_addon,static/description/icon.png"/>
+    
+    <!-- Flight Management Section -->
+    <menuitem id="menu_flight_section" 
+              name="Flight Management" 
+              parent="menu_sample_main" 
+              sequence="5"/>
+    
+    <!-- Flight Menus -->
+    <menuitem id="menu_flight_all" name="All Flights" 
+              parent="menu_flight_section" 
+              action="action_flight_flight" 
+              sequence="10"/>
+              
+    <menuitem id="menu_flight_scheduled" name="Scheduled Flights" 
+              parent="menu_flight_section" 
+              action="action_flight_flight_scheduled" 
+              sequence="20"/>
+              
+    <menuitem id="menu_flight_today" name="Today's Flights" 
+              parent="menu_flight_section" 
+              action="action_flight_flight_today" 
+              sequence="30"/>
     
     <!-- Configuration Menu -->
     <menuitem id="menu_sample_config" 
@@ -17,7 +39,7 @@
               name="Sample Records" 
               parent="menu_sample_main" 
               action="action_sample_model" 
-              sequence="10"/>
+              sequence="80"/>
     
     <!-- Tags Menu -->
     <menuitem id="menu_sample_tags" 

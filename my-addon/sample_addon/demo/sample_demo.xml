@@ -57,7 +57,7 @@
         
         <record id="sample_line_1_3" model="sample.model.line">
             <field name="sample_id" ref="sample_record_1"/>
-            <field name="name">Testing & Deployment</field>
+            <field name="name">Testing &amp; Deployment</field>
             <field name="sequence">30</field>
             <field name="quantity">10.0</field>
             <field name="price">70.0</field>

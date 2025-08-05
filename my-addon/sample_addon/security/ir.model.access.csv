@@ -5,3 +5,5 @@ access_sample_model_line_user,sample.model.line.user,model_sample_model_line,bas
 access_sample_model_line_manager,sample.model.line.manager,model_sample_model_line,base.group_system,1,1,1,1
 access_sample_model_tag_user,sample.model.tag.user,model_sample_model_tag,base.group_user,1,0,0,0
 access_sample_model_tag_manager,sample.model.tag.manager,model_sample_model_tag,base.group_system,1,1,1,1
+access_flight_flight_user,flight.flight.user,model_flight_flight,base.group_user,1,1,1,0
+access_flight_flight_manager,flight.flight.manager,model_flight_flight,base.group_system,1,1,1,1
