@@ -39,9 +39,9 @@
     'data': [
         'security/ir.model.access.csv',
         'data/sample_data.xml',
-        'views/menu_views.xml',
         'views/flight_views.xml',
         'views/sample_model_views.xml',
+        'views/menu_views.xml',
         'wizard/sample_wizard_views.xml',
     ],
     'demo': [
