@@ -1,0 +1,1 @@
+Tôi muốn sử dụng docker-compose để boot app dùng Odoo. Mở cổng cho DB để tôi có thể check data

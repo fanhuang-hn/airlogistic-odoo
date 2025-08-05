@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Simple Model Actions -->
+    <record id="action_simple_model" model="ir.actions.act_window">
+        <field name="name">Simple Records</field>
+        <field name="res_model">simple.model</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Simple Model List View -->
+    <record id="view_simple_model_list" model="ir.ui.view">
+        <field name="name">simple.model.list</field>
+        <field name="model">simple.model</field>
+        <field name="arch" type="xml">
+            <list string="Simple Records">
+                <field name="name"/>
+                <field name="description"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Simple Model Form View -->
+    <record id="view_simple_model_form" model="ir.ui.view">
+        <field name="name">simple.model.form</field>
+        <field name="model">simple.model</field>
+        <field name="arch" type="xml">
+            <form string="Simple Record">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="description"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>
