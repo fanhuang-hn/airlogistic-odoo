@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Main Menu -->
+    <menuitem id="menu_simple_main" 
+              name="Simple Addon" 
+              sequence="100"/>
+    
+    <!-- Simple Model Menu -->
+    <menuitem id="menu_simple_model" 
+              name="Simple Records" 
+              parent="menu_simple_main" 
+              action="action_simple_model" 
+              sequence="10"/>
+</odoo>

@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!-- Main Menu -->
-    <menuitem id="menu_sample_main" 
+    <menuitem id="menu_aht_flight_main" 
               name="Air Logistics" 
-              sequence="100"
-              web_icon="sample_addon,static/description/icon.png"/>
+              sequence="100"/>
     
     <!-- Flight Management Section -->
     <menuitem id="menu_flight_section" 
               name="Flight Management" 
-              parent="menu_sample_main" 
+              parent="menu_aht_flight_main" 
               sequence="5"/>
     
     <!-- Flight Menus -->
@@ -27,24 +26,4 @@
               parent="menu_flight_section" 
               action="action_flight_flight_today" 
               sequence="30"/>
-    
-    <!-- Configuration Menu -->
-    <menuitem id="menu_sample_config" 
-              name="Configuration" 
-              parent="menu_sample_main" 
-              sequence="90"/>
-    
-    <!-- Sample Model Menu -->
-    <menuitem id="menu_sample_model" 
-              name="Sample Records" 
-              parent="menu_sample_main" 
-              action="action_sample_model" 
-              sequence="80"/>
-    
-    <!-- Tags Menu -->
-    <menuitem id="menu_sample_tags" 
-              name="Tags" 
-              parent="menu_sample_config" 
-              action="action_sample_model_tag" 
-              sequence="10"/>
 </odoo>
