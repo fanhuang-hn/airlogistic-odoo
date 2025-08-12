@@ -19,7 +19,6 @@ services:
     ports:
       - "8069:8069"
     volumes:
-      - ./addons:/mnt/extra-addons/community
       - ./my-addon:/mnt/extra-addons/custom
       - ./odoo.conf:/etc/odoo/odoo.conf
     environment:
