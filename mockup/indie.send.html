@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Logistic Portal — Gửi hàng cá nhân</title>
+  <style>
+    :root{
+      --bg:#0b1020;--card:#11172c;--muted:#8ba0b5;--text:#e9f0f8;--accent:#7cd4ff;--accent-2:#5b9dff;--ok:#22c55e;--warn:#f59e0b;--danger:#ef4444;
+      --radius:16px;--shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:linear-gradient(180deg,#0b1020,#090d1a 60%,#060914);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
+    a{color:var(--accent)}
+    .container{max-width:1100px;margin:40px auto;padding:0 20px}
+    header{display:flex;gap:16px;align-items:center;margin-bottom:18px}
+    .logo{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:var(--shadow)}
+    h1{font-size:24px;margin:0}
+    .subtitle{color:var(--muted)}
+
+    .card{background:radial-gradient(60% 120% at 0% 0%,#121a33,#0f1530 60%);border:1px solid #1c2444;border-radius:var(--radius);box-shadow:var(--shadow)}
+    .pad{padding:22px}
+
+    /* stepper */
+    .stepper{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}
+    .step{background:#0d1330;border:1px solid #1e2650;border-radius:14px;padding:10px 12px;display:flex;align-items:center;gap:10px;color:var(--muted)}
+    .step.active{border-color:var(--accent);color:var(--text);box-shadow:0 0 0 2px rgba(124,212,255,.12) inset}
+    .step .num{width:28px;height:28px;border-radius:10px;display:grid;place-items:center;background:#0b122f;color:#9ab7ff;border:1px solid #233066;font-weight:600}
+    .step.active .num{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#041126;border:none}
+
+    /* grid */
+    .grid{display:grid;gap:14px}
+    @media(min-width:900px){.grid.two{grid-template-columns:1fr 1fr}.grid.three{grid-template-columns:repeat(3,1fr)}}
+
+    label{display:block;font-weight:600;margin-bottom:6px}
+    .hint{color:var(--muted);font-size:13px}
+    input,select,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid #22305a;background:#0a1130;color:var(--text);outline:none}
+    input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(124,212,255,.15)}
+
+    .row{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{appearance:none;border:none;cursor:pointer;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#041126;padding:12px 18px;border-radius:12px;font-weight:700;letter-spacing:.2px;box-shadow:var(--shadow)}
+    .btn.secondary{background:#10183a;color:var(--text);border:1px solid #233066}
+    .btn.ghost{background:transparent;border:1px solid #2a3566;color:var(--text)}
+    .btn[disabled]{opacity:.5;cursor:not-allowed}
+
+    .right{margin-left:auto}
+    .footer{display:flex;gap:10px;justify-content:flex-end;padding:18px;border-top:1px solid #1a2347;background:linear-gradient(180deg,#0c1333,#0a1028)}
+
+    .aside{border-left:1px dashed #27335f;padding:18px}
+    .price{font-size:28px;font-weight:800}
+    .pill{display:inline-flex;gap:8px;align-items:center;border:1px solid #22305a;border-radius:999px;padding:6px 10px;background:#0a1130;color:#9fb4ff;font-size:12px}
+
+    .hidden{display:none}
+    .hr{height:1px;background:linear-gradient(90deg,transparent,#22305a,transparent);margin:16px 0}
+
+    .tag{font-size:12px;background:#15214a;border:1px solid #26366f;color:#a7c2ff;border-radius:999px;padding:4px 8px}
+    .toast{position:fixed;right:20px;bottom:20px;background:#0f1a3a;border:1px solid #2a3a78;border-radius:12px;padding:12px 14px;box-shadow:var(--shadow);display:none}
+    .success{border-color:#1f6a3a}
+
+    .review{background:#0b1333;border:1px solid #1f2a58;border-radius:12px;padding:14px}
+    .review h4{margin:6px 0}
+    code.small{font-size:12px;color:#a4b7d3}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo" aria-hidden="true"></div>
+      <div>
+        <h1>Gửi hàng cá nhân (B2C)</h1>
+        <div class="subtitle">Luồng 4 bước • Điền thông tin &rarr; Gói hàng &rarr; Vận chuyển & thanh toán &rarr; Xem lại & xác nhận</div>
+      </div>
+    </header>
+
+    <div class="card pad" role="region" aria-label="Trình hướng dẫn gửi hàng">
+      <!-- Stepper -->
+      <div class="stepper" id="stepper">
+        <div class="step active" data-step="1"><div class="num">1</div><div>Người gửi</div></div>
+        <div class="step" data-step="2"><div class="num">2</div><div>Gói hàng</div></div>
+        <div class="step" data-step="3"><div class="num">3</div><div>Giao nhận & Thanh toán</div></div>
+        <div class="step" data-step="4"><div class="num">4</div><div>Xem lại & Xác nhận</div></div>
+      </div>
+
+      <div class="grid two">
+        <main id="wizard">
+          <!-- STEP 1: Sender & Receiver -->
+          <section class="step-pane" data-step="1">
+            <h3>1) Thông tin người gửi & người nhận</h3>
+            <div class="grid two">
+              <div class="card pad">
+                <h4>Người gửi</h4>
+                <label>Họ và tên</label>
+                <input required id="senderName" placeholder="VD: Nguyễn Văn A" />
+                <label>Số điện thoại</label>
+                <input required id="senderPhone" placeholder="0912345678" />
+                <label>Email</label>
+                <input type="email" id="senderEmail" placeholder="email@domain.com" />
+                <label>Địa chỉ lấy hàng</label>
+                <textarea id="senderAddress" rows="3" placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành"></textarea>
+                <div class="grid three">
+                  <div>
+                    <label>Mã bưu chính</label>
+                    <input id="senderZip" placeholder="700000" />
+                  </div>
+                  <div>
+                    <label>Ngày lấy hàng</label>
+                    <input type="date" id="pickupDate" />
+                  </div>
+                  <div>
+                    <label>Khung giờ</label>
+                    <select id="pickupSlot">
+                      <option value="">Chọn</option>
+                      <option>Sáng (8:00–12:00)</option>
+                      <option>Chiều (13:00–17:00)</option>
+                      <option>Tối (18:00–21:00)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="hr"></div>
+                <label class="row" style="align-items:center"><input type="checkbox" id="dropoff" />&nbsp;Tôi sẽ tự mang ra điểm gửi (drop-off)</label>
+                <div id="dropoffHint" class="hint hidden">Sau khi sang bước 3 bạn có thể chọn bưu cục gần bạn.</div>
+              </div>
+
+              <div class="card pad">
+                <h4>Người nhận</h4>
+                <label>Họ và tên</label>
+                <input required id="rcvName" placeholder="VD: Trần Thị B" />
+                <label>Số điện thoại</label>
+                <input required id="rcvPhone" placeholder="0987654321" />
+                <label>Địa chỉ giao hàng</label>
+                <textarea id="rcvAddress" rows="3" placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành"></textarea>
+                <div class="grid three">
+                  <div>
+                    <label>Mã bưu chính</label>
+                    <input id="rcvZip" placeholder="100000" />
+                  </div>
+                  <div>
+                    <label>Dịch vụ</label>
+                    <select id="service">
+                      <option value="STD">Tiêu chuẩn (2–4 ngày)</option>
+                      <option value="EXP">Hỏa tốc (24–48h)</option>
+                      <option value="ECO">Tiết kiệm (4–6 ngày)</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label>Bảo hiểm hàng hóa</label>
+                    <select id="insurance">
+                      <option value="0">Không</option>
+                      <option value="0.01">1% giá trị khai báo</option>
+                      <option value="0.02">2% giá trị khai báo</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- STEP 2: Parcel details -->
+          <section class="step-pane hidden" data-step="2">
+            <h3>2) Thông tin gói hàng</h3>
+            <div class="card pad">
+              <div class="grid three">
+                <div>
+                  <label>Trọng lượng (kg)</label>
+                  <input id="weight" type="number" min="0" step="0.1" placeholder="1.5" />
+                </div>
+                <div>
+                  <label>Kích thước (cm)</label>
+                  <div class="row">
+                    <input id="len" type="number" min="0" placeholder="Dài"/>
+                    <input id="wid" type="number" min="0" placeholder="Rộng"/>
+                    <input id="hei" type="number" min="0" placeholder="Cao"/>
+                  </div>
+                  <div class="hint">Phí tính theo trọng lượng thực hoặc quy đổi: <code class="small">(D×R×C)/5000</code></div>
+                </div>
+                <div>
+                  <label>Giá trị khai báo (₫)</label>
+                  <input id="declared" type="number" min="0" step="1000" placeholder="500000" />
+                </div>
+              </div>
+
+              <div class="grid two" style="margin-top:10px">
+                <div>
+                  <label>Loại hàng hóa</label>
+                  <select id="cat">
+                    <option>Tài liệu</option>
+                    <option>Hàng thời trang</option>
+                    <option>Điện tử</option>
+                    <option>Đồ gia dụng</option>
+                    <option>Thực phẩm khô</option>
+                    <option>Khác</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Nội dung gói hàng</label>
+                  <input id="desc" placeholder="Mô tả ngắn…" />
+                </div>
+              </div>
+
+              <div class="row" style="margin-top:10px;align-items:center">
+                <label class="row" style="align-items:center"><input type="checkbox" id="danger"/> &nbsp;Hàng nguy hiểm / pin lithium</label>
+                <span class="tag">Tuân thủ IATA</span>
+              </div>
+
+              <div class="grid two" style="margin-top:10px">
+                <div>
+                  <label>Ảnh gói hàng / AWB (tùy chọn)</label>
+                  <input id="awb" type="file" accept="image/*,.pdf" />
+                </div>
+                <div>
+                  <label>Thu hộ (COD)</label>
+                  <input id="cod" type="number" min="0" step="1000" placeholder="0" />
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- STEP 3: Delivery & Payment -->
+          <section class="step-pane hidden" data-step="3">
+            <h3>3) Giao nhận & Thanh toán</h3>
+            <div class="grid two">
+              <div class="card pad">
+                <h4>Hình thức giao nhận</h4>
+                <label>
+                  <select id="handoff">
+                    <option value="pickup">Lấy tận nơi</option>
+                    <option value="dropoff">Tự mang ra điểm gửi (drop‑off)</option>
+                  </select>
+                </label>
+                <div id="dropoffList" class="hidden">
+                  <label>Chọn bưu cục gần bạn</label>
+                  <select id="branch">
+                    <option>Quận 1 — 29 Lê Lợi</option>
+                    <option>Quận 3 — 120 CMT8</option>
+                    <option>Quận 7 — SC VivoCity</option>
+                  </select>
+                </div>
+
+                <div class="hr"></div>
+                <h4>Phương thức thanh toán</h4>
+                <div class="grid two">
+                  <label><input type="radio" name="pay" value="card" checked/> Thẻ (Visa/Master/JCB)</label>
+                  <label><input type="radio" name="pay" value="wallet"/> Ví điện tử</label>
+                  <label><input type="radio" name="pay" value="cod"/> Thanh toán khi giao</label>
+                  <label><input type="radio" name="pay" value="bank"/> Chuyển khoản</label>
+                </div>
+                <div id="cardBlock" style="margin-top:8px">
+                  <label>Số thẻ</label>
+                  <input placeholder="4111 1111 1111 1111" />
+                  <div class="row">
+                    <div style="flex:1">
+                      <label>Hết hạn</label>
+                      <input placeholder="MM/YY" />
+                    </div>
+                    <div style="flex:1">
+                      <label>CVV</label>
+                      <input placeholder="123" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card pad aside">
+                <h4>Tạm tính cước phí</h4>
+                <div class="row" style="align-items:center;justify-content:space-between">
+                  <div>
+                    <div class="pill">Dịch vụ: <span id="svcName" style="margin-left:6px">Tiêu chuẩn</span></div>
+                    <div class="hint">Phí có thể thay đổi khi đo thực tế</div>
+                  </div>
+                  <div class="price" id="quote">₫0</div>
+                </div>
+                <div class="hr"></div>
+                <div class="grid two">
+                  <div>
+                    <div class="hint">Phí cơ bản</div>
+                    <div id="baseFee">₫0</div>
+                  </div>
+                  <div>
+                    <div class="hint">Phí trọng lượng</div>
+                    <div id="wFee">₫0</div>
+                  </div>
+                  <div>
+                    <div class="hint">Bảo hiểm</div>
+                    <div id="insFee">₫0</div>
+                  </div>
+                  <div>
+                    <div class="hint">COD (phí dịch vụ)</div>
+                    <div id="codFee">₫0</div>
+                  </div>
+                </div>
+                <div class="hr"></div>
+                <div class="hint">Ước lượng dựa trên mã bưu chính & trọng lượng. Công thức demo trong JS.</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- STEP 4: Review -->
+          <section class="step-pane hidden" data-step="4">
+            <h3>4) Xem lại & Xác nhận</h3>
+            <div class="review" id="review"></div>
+            <label class="row" style="align-items:center;margin-top:10px"><input type="checkbox" id="agree"/> &nbsp;Tôi đồng ý điều khoản vận chuyển và chính sách dữ liệu</label>
+          </section>
+        </main>
+
+        <aside>
+          <div class="card pad">
+            <h4>Trạng thái</h4>
+            <div class="grid two">
+              <div>
+                <div class="hint">Bước hiện tại</div>
+                <div id="currStep">1 / 4</div>
+              </div>
+              <div>
+                <div class="hint">Mã ước tính</div>
+                <div><code id="quoteId">—</code></div>
+              </div>
+            </div>
+            <div class="hr"></div>
+            <h4>Mẹo</h4>
+            <ul>
+              <li>Nhập đúng mã bưu chính để tính phí chính xác hơn.</li>
+              <li>Trọng lượng quy đổi: (D×R×C)/5000.</li>
+              <li>Hàng giá trị cao nên mua bảo hiểm.</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+
+      <div class="footer">
+        <button class="btn ghost" id="backBtn" disabled>Quay lại</button>
+        <button class="btn secondary" id="saveBtn">Lưu nháp</button>
+        <button class="btn" id="nextBtn">Tiếp tục</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast">Đã lưu bản nháp.</div>
+  <div id="toastOk" class="toast success">Gửi yêu cầu thành công! Mã: <code id="orderId"></code></div>
+
+  <script>
+    const $ = (q)=>document.querySelector(q);
+    const panes = [...document.querySelectorAll('.step-pane')];
+    const steps = [...document.querySelectorAll('.stepper .step')];
+    let step = 1;
+
+    function setStep(n){
+      step = Math.max(1, Math.min(4, n));
+      panes.forEach(p=>p.classList.toggle('hidden', Number(p.dataset.step)!==step));
+      steps.forEach(s=>s.classList.toggle('active', Number(s.dataset.step)===step));
+      $('#currStep').textContent=`${step} / 4`;
+      $('#backBtn').disabled = (step===1);
+      $('#nextBtn').textContent = step===4? 'Xác nhận gửi hàng' : 'Tiếp tục';
+      window.scrollTo({top:0,behavior:'smooth'});
+      if(step===3) recalc();
+      if(step===4) buildReview();
+    }
+
+    // Controls
+    $('#backBtn').onclick=()=>setStep(step-1);
+    $('#nextBtn').onclick=()=>{
+      if(step<4){
+        if(validate(step)) setStep(step+1);
+      }else{
+        if(!$('#agree').checked){alert('Vui lòng đồng ý điều khoản.');return}
+        // mock submit
+        const id = 'ORD' + Math.floor(100000+Math.random()*900000);
+        $('#orderId').textContent=id;
+        toast('#toastOk');
+      }
+    };
+
+    $('#saveBtn').onclick=()=>toast('#toast');
+
+    function toast(sel){
+      const t=$(sel); t.style.display='block';
+      setTimeout(()=>t.style.display='none',2200);
+    }
+
+    // UX bindings
+    $('#dropoff').addEventListener('change',e=>{
+      $('#dropoffHint').classList.toggle('hidden',!e.target.checked);
+      if(e.target.checked){ $('#handoff').value='dropoff'; toggleHandoff(); }
+    });
+    $('#handoff').addEventListener('change',toggleHandoff);
+    function toggleHandoff(){
+      const isDrop = $('#handoff').value==='dropoff';
+      $('#dropoffList').classList.toggle('hidden',!isDrop);
+    }
+
+    // Pricing model (demo)
+    function v(x){ return Number(x||0) }
+    function recalc(){
+      const service = $('#service').value;
+      const svcName = {STD:'Tiêu chuẩn',EXP:'Hỏa tốc',ECO:'Tiết kiệm'}[service]||'Tiêu chuẩn';
+      $('#svcName').textContent = svcName;
+
+      const w = Math.max(v($('#weight').value), (v($('#len').value)*v($('#wid').value)*v($('#hei').value))/5000);
+      const base = {ECO:15000, STD:22000, EXP:40000}[service] || 22000;
+      const perKg = {ECO:7000, STD:9000, EXP:15000}[service] || 9000;
+
+      // distance proxy from zipcode difference (demo only)
+      const dz = Math.abs(v($('#senderZip').value) - v($('#rcvZip').value));
+      const zone = dz>30000? 3 : dz>10000? 2 : 1;
+      const zoneFee = {1:0,2:8000,3:16000}[zone];
+
+      // insurance
+      const declared = v($('#declared').value);
+      const insRate = v($('#insurance').value);
+      const ins = Math.round(declared * insRate);
+
+      // COD service fee (1%)
+      const codFee = Math.round(v($('#cod').value) * 0.01);
+
+      const weightFee = Math.round(Math.max(0,w)*perKg);
+      const total = base + zoneFee + weightFee + ins + codFee;
+
+      $('#baseFee').textContent = toVND(base + zoneFee);
+      $('#wFee').textContent = toVND(weightFee);
+      $('#insFee').textContent = toVND(ins);
+      $('#codFee').textContent = toVND(codFee);
+      $('#quote').textContent = toVND(total);
+
+      // generate quote id
+      if($('#quoteId').textContent==='—'){
+        $('#quoteId').textContent = 'Q' + Math.floor(1000+Math.random()*9000);
+      }
+    }
+
+    ['#service','#weight','#len','#wid','#hei','#senderZip','#rcvZip','#declared','#insurance','#cod']
+      .forEach(sel=>$(sel).addEventListener('input',recalc));
+
+    function toVND(n){ return new Intl.NumberFormat('vi-VN',{style:'currency',currency:'VND',maximumFractionDigits:0}).format(n||0) }
+
+    function validate(s){
+      // very light client-side checks
+      if(s===1){
+        const required = [['#senderName','Tên người gửi'],['#senderPhone','SĐT người gửi'],['#rcvName','Tên người nhận'],['#rcvPhone','SĐT người nhận']];
+        for(const [sel,label] of required){
+          if(!$(sel).value){ alert('Vui lòng nhập '+label); return false }
+        }
+      }
+      if(s===2){
+        if(!$('#weight').value && !( $('#len').value && $('#wid').value && $('#hei').value)){
+          alert('Nhập trọng lượng hoặc kích thước để tính cước.'); return false;
+        }
+      }
+      if(s===3){
+        // no-op demo
+      }
+      return true;
+    }
+
+    function buildReview(){
+      const rows = [
+        ['Người gửi', $('#senderName').value + ' — ' + $('#senderPhone').value],
+        ['Địa chỉ lấy', $('#senderAddress').value],
+        ['Người nhận', $('#rcvName').value + ' — ' + $('#rcvPhone').value],
+        ['Địa chỉ giao', $('#rcvAddress').value],
+        ['Dịch vụ', {STD:'Tiêu chuẩn',EXP:'Hỏa tốc',ECO:'Tiết kiệm'}[$('#service').value]],
+        ['Bảo hiểm', $('#insurance').value==='0' ? 'Không' : (Number($('#insurance').value)*100)+'%'],
+        ['Gói hàng', `${$('#weight').value||'—'} kg; ${$('#len').value||'—'}×${$('#wid').value||'—'}×${$('#hei').value||'—'} cm`],
+        ['Giá trị khai báo', toVND($('#declared').value)],
+        ['COD', toVND($('#cod').value)],
+        ['Giao nhận', $('#handoff').value==='dropoff' ? 'Drop‑off tại bưu cục' : 'Lấy tận nơi'],
+        ['Tổng phí ước tính', $('#quote').textContent]
+      ];
+      const html = rows.map(r=>`<div class="row" style="justify-content:space-between"><strong>${r[0]}</strong><span>${r[1]||''}</span></div>`).join('');
+      $('#review').innerHTML = html;
+    }
+
+    // init
+    setStep(1);
+  </script>
+</body>
+</html>
